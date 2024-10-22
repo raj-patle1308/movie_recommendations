@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>{% block title %}Movies{% endblock title %}</title>
+
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'recommend/css/bootstrap.min.css'%}">
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' >
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet' href='{% static "recommend/css/base.css" %}' />
+
+    <style type="text/css">
+    body {
+        background-color: #f4f4f4;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    nav.navbar {
+        background-color: #072d4e;
+        border: none;
+    }
+
+    nav.navbar a.navbar-brand, nav.navbar ul.navbar-nav a {
+        color: #fff;
+    }
+
+    nav.navbar ul.navbar-nav a:hover, nav.navbar ul.navbar-nav a:focus {
+        background-color: #054067;
+        color: #fff;
+    }
+
+    .thumbnail {
+        border: none;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #4e0b9096;
+        margin-bottom: 20px;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: auto;
+    }
+
+    .thumbnail .caption {
+        padding: 15px;
+    }
+
+    .thumbnail h3, .thumbnail p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .thumbnail h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .thumbnail p {
+        font-size: 1em;
+        color: #777;
+    }
+
+    .star-rating, .heart-rating {
+        line-height: 32px;
+        font-size: 1.25em;
+        margin-left: -33px;
+    }
+
+    .star-rating .fa-star, .heart-rating .fa-heart {
+        color: #f39c12;
+    }
+
+    .button, .button1 {
+        background-color: #e74c3c;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .button {
+        padding: 10px 32px;
+        margin-left: 45px;
+    }
+
+    .button1 {
+        padding: 12px 30px;
+        margin-left: 4px;
+    }
+
+    .button:hover, .button1:hover {
+        background-color: #c0392b;
+    }
+</style>
+
+</head>
+
+<body style="background-color:#052642">
+	<nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="topNavBar">
+
+                <ul class="nav navbar-nav ">
+                    <li><a style="color:#4CAF50" href="/">Awesome-Movie-Recommender</a></li>
+                </ul>
+                <ul class="nav navbar-nav ">
+                    <li><a href="{% url 'index' %}">&nbsp; Home</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            &nbsp; Categories <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'Romance' %}" style="color:#151212">Romance</a></li>
+                            <li><a href="{% url 'Action' %}" style="color:#141111">Action</a></li>
+                            
+                        </ul>
+                    </li>
+                </ul>
+                
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'watch' %}">
+                            <span aria-hidden="true"></span>MyList
+                        </a>
+                    </li>
+                 {% if not request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'signup' %}">
+                            <span aria-hidden="true"></span>SignUp
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'login' %}">
+                            <span aria-hidden="true"></span>Login
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'logout' %}">
+                            <span aria-hidden="true"></span>&nbsp;Logout
+                        </a>
+                    </li>
+                {% endif %}
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</div>
+    {% block body %}
+    {% endblock %}
+     <nav class="navbar navbar-bottom">
+    <footer class="page-footer font-small">
+        <hr>
+          <div class="text-center center-block">
+    <br />
+    <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1200px-Instagram_icon.png" alt="Instagram" style="height: 3em;"></a>
+    <a href="#" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="height: 3em;"></a>
+</div>
+
+
+        <div class="footer-copyright text-center py-3">© 2024
+        <a href="#" style="color:#fff">XYZ</a>
+    </div>
+
+    </footer>
+    </nav>
+	<script type="text/javascript" src="{%static 'recommend/js/jquery.min.js'%}">
+	</script>
+
+	<script type="text/javascript" src="{%static 'recommend/js/bootstrap.min.js'%}">
+	</script>
+    <script type="text/javascript">
+    var $star_rating = $('.star-rating .fa');
+
+    var SetRatingStar = function() {
+        return $star_rating.each(function() {
+        if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+            return $(this).removeClass('fa-star-o').addClass('fa-star');
+        } else {
+        return $(this).removeClass('fa-star').addClass('fa-star-o');
+        }
+        });
+        };
+
+    $star_rating.on('click', function() {
+    $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+    return SetRatingStar();
+    });
+
+    SetRatingStar();
+    $(document).ready(function() {
+
+    });
+
+</script>
+<script type="text/javascript">
+    function validateForm(){
+    var x = document.forms["ratingForm"]["rating"].value;
+    if(x=="0"){
+        alert("Invalid Input");
+        return false;
+    }
+    }
+</script>
+
+
+
+</body>
+</html>

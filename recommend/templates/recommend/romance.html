@@ -1,0 +1,124 @@
+{% extends 'recommend/base.html'%}
+{% block body %}
+
+<style type="text/css">
+    body {
+        background-color: #f4f4f4;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    nav.navbar {
+        background-color: #072d4e;
+        border: none;
+    }
+
+    nav.navbar .navbar-brand img {
+        height: 40px;
+        width: auto;
+    }
+
+    nav.navbar a.navbar-brand, nav.navbar ul.navbar-nav a {
+        color: #fff;
+    }
+
+    nav.navbar ul.navbar-nav a:hover, nav.navbar ul.navbar-nav a:focus {
+        background-color: #054067;
+        color: #fff;
+    }
+
+    .thumbnail {
+        border: none;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: auto;
+    }
+
+    .thumbnail .caption {
+        padding: 15px;
+    }
+
+    .thumbnail h3, .thumbnail p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .thumbnail h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .thumbnail p {
+        font-size: 1em;
+        color: #777;
+    }
+
+    .star-rating, .heart-rating {
+        line-height: 32px;
+        font-size: 1.25em;
+        margin-left: -33px;
+    }
+
+    .star-rating .fa-star, .heart-rating .fa-heart {
+        color: #f39c12;
+    }
+
+    .button, .button1 {
+        background-color: #e74c3c;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .button {
+        padding: 10px 32px;
+        margin-left: 45px;
+    }
+
+    .button1 {
+        padding: 12px 30px;
+        margin-left: 4px;
+    }
+
+    .button:hover, .button1:hover {
+        background-color: #c0392b;
+    }
+</style>
+
+<div class="container">
+    <h1>Romance Movies</h1>
+    <div class="row">
+        {% for movie in movies %}
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src="{{ movie.image.url }}" alt="{{ movie.title }}">
+                    <div class="caption">
+                        <h3>{{ movie.title }}</h3>
+                        <p>{{ movie.genre }}</p>
+                        <p><a href="{{ movie.hyperlink }}" class="btn btn-primary" role="button">More Info</a></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Include jQuery and Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+{% endblock %}
